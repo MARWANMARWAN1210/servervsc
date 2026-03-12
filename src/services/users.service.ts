@@ -19,7 +19,7 @@ export class UserService {
         const newUserDBO : UserDBO = {
             id: 0,
             username : newuser.userName,
-            password : newuser.password,
+            password : crnewuser.password,
             role : newuser.role,
             email : newuser.email,
             last_name : newuser.lastName,
