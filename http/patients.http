@@ -1,0 +1,39 @@
+### GET
+GET http://localhost:3000/patients HTTP/1.1
+
+### GET AVEC LE ID
+GET http://localhost:3000/patients/1 HTTP/1.1
+
+#### GET AVEC LE NISS
+GET http://localhost:3000/patients/niss/640511-123-45  HTTP/1.1
+
+### GET id short
+GET http://localhost:3000/patients/2/short    HTTP/1.1
+
+### GET avec zipcode
+GET http://localhost:3000/patients/zipcode/1000 HTTP/1.1
+
+### GET AVEC zipcode et doctor id 
+
+GET http://localhost:3000/patients/doctor/1/zipcode/1000 HTTP/1.1
+
+###
+# GET PATIENT FILTRE
+GET http://localhost:3000/patients?zipCode=1000 HTTP/1.1 
+
+ ###
+ #POS
+POST http://localhost:3000/patients/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "Jean",
+    "lastName": "Dupond",
+    "birthdate": "1990-01-11"
+}
+
+
+###
+#pu
+PUT http://localhost:3000/patients/:id
+
