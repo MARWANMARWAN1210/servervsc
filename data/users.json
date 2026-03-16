@@ -1,1 +1,1 @@
-[]
+[{"id":1,"username":"admin","password":"$2b$10$aZs6QTWUJnLe8I4vr008SeBsyv2S0vL6zZwGjlXzX4DpzlSyOhUJO","role":"admin","email":"mrn@mrn.mrn","last_name":"Mrn","first_name":"Mrn"},{"id":2,"username":"mrn","password":"$2b$10$89qy4gL9Jl8Q6Vis6qz.2uhJmndiBMGSf4/OZ51GzYPhh0HH40GFC","role":"admin","email":"mrn@mrn.mrn","last_name":"Mrn","first_name":"Mrn"}]

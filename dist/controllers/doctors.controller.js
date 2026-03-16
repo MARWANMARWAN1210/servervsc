@@ -9,6 +9,7 @@ const guards_1 = require("../utils/guards");
 const doctors_mapper_1 = require("../mappers/doctors.mapper");
 const logger_service_1 = require("../services/logger.service");
 const doctors_service_1 = require("../services/doctors.service");
+const auth_service_1 = require("../services/auth.service");
 exports.doctorsController = (0, express_1.Router)();
 // This is a static mock array of doctors
 console.log("ok");
@@ -105,7 +106,7 @@ exports.doctorsController.put("/:id", (req, res) => {
     doctors[doctorIndex] = updatedDoctordDTO;
     res.status(200).send(doctors_mapper_1.DoctorsMapper.toDTO(updatedDoctordDTO));
 });
-exports.doctorsController.delete("/:id", (req, res) => {
+exports.doctorsController.delete("/:id", auth_service_1.AuthService.authorize, (req, res) => {
     logger_service_1.LoggerService.info('DELETE /doctors/:id');
     const idParam = Number(req.params.id);
     if (!(0, guards_1.isNumber)(idParam)) {

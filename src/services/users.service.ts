@@ -1,49 +1,56 @@
+import { hashSync } from "bcrypt";
 import { UserMapper } from "../mappers/users.mapper";
 import { NewUser, User, UserDBO } from "../models/user.model";
 import { FilesService } from "./files.service";
 import { LoggerService } from "./logger.service";
 
 export class UserService {
-    public static create (newuser : NewUser) : User {
-
-        let allUsers : UserDBO [] = [];
-
-        try {
-            allUsers = FilesService.readFile<UserDBO>("data/user.json")
-        } catch (error) {
-            LoggerService.error(error)
-            allUsers = [];
-            
-        }
-
-        const newUserDBO : UserDBO = {
-            id: 0,
-            username : newuser.userName,
-            password : crnewuser.password,
-            role : newuser.role,
-            email : newuser.email,
-            last_name : newuser.lastName,
-            first_name : newuser.firstName,
-
-            
-        }
-        allUsers.push(newUserDBO);
-       
-        FilesService.writeFile("data/user.json", allUsers)
-        return UserMapper.fromDBO(newUserDBO);
-
-
-
+    
+     public static getByUserName(userName: string): User | null {
+        let allUsers: UserDBO[] = [];
  
-        // lire les users dans le fichier users.json 
-        // cela renverra un tableau de de usersdbo
-        
-        // converir le newuser en newuserdbo
-        // ajouer le newuserdbo au ableau
-
-        // réécrire la fichier users.json
-
-        //renvoer le user 
-
+        try {
+            allUsers = FilesService.readFile<UserDBO>("data/users.json");
+        } catch (error) {
+            LoggerService.error(error);
+            return null;
+        }
+ 
+        const foundUser = allUsers.find((u) => u.username === userName);
+ 
+        if (!foundUser) return null;
+ 
+        return UserMapper.fromDBO(foundUser);
+    }
+ 
+    public static create(newUser: NewUser): User {
+        let allUsers: UserDBO[] = [];
+ 
+        try {
+            allUsers = FilesService.readFile<UserDBO>("data/users.json");
+        } catch (error) {
+            LoggerService.error(error);
+            allUsers = [];
+        }
+ 
+        // Vérifier que le nom d'utilisateur n'existe pas déjà
+        if (UserService.getByUserName(newUser.userName)) {
+            throw new Error(`Le nom d'utilisateur "${newUser.userName}" est déjà utilisé.`);
+        }
+ 
+        const newUserDBO: UserDBO = {
+            id:         allUsers.length + 1,
+            username:   newUser.userName,
+            password:   hashSync(newUser.password, 10),
+            role:       newUser.role,
+            email:      newUser.email,
+            last_name:  newUser.lastName,
+            first_name: newUser.firstName,
+        };
+ 
+        allUsers.push(newUserDBO);
+        FilesService.writeFile("data/users.json", allUsers);
+ 
+        return UserMapper.fromDBO(newUserDBO);
     }
 }

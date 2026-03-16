@@ -39,4 +39,17 @@ DELETE http://localhost:3000/doctors/1
 # GET filtrée
 GET http://localhost:3000/doctors?speciality=carlogue HTTP/1.1
 
-####
+###
+# @name admin_login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin"
+}
+
+###
+# DELETE avec token
+DELETE http://localhost:3000/doctors/2 HTTP/1.1
+Authorization: {{admin_login.response.body.token}} 

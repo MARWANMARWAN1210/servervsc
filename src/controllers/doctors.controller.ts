@@ -10,6 +10,7 @@ import { LoggerService } from "../services/logger.service";
 import { json } from "stream/consumers";
 import { DoctorService } from "../services/doctors.service";
 import { PatientDTO } from "../models/patient.model";
+import { AuthService } from "../services/auth.service";
 
 export const doctorsController = Router();
 
@@ -128,7 +129,7 @@ doctorsController.put("/:id",(req:Request, res:Response)=> {
 
 })
 
-doctorsController.delete("/:id",(req:Request, res:Response)=>{
+doctorsController.delete("/:id", AuthService.authorize as any, (req:Request, res:Response)=>{
   LoggerService.info('DELETE /doctors/:id')
   const idParam = Number(req.params.id)
   if(!isNumber(idParam)){

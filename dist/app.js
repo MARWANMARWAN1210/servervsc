@@ -6,13 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 // import dependencies
 const cors = require('cors');
+const path_1 = __importDefault(require("path"));
 const express_1 = __importDefault(require("express"));
 const doctors_controller_1 = require("./controllers/doctors.controller");
 const patients_controller_1 = require("./controllers/patients.controller");
+const users_controller_1 = require("./controllers/users.controller");
+const auth_controller_1 = require("./controllers/auth.controller");
 // creates an express app
 exports.app = (0, express_1.default)();
 exports.app.use(cors());
 exports.app.use(express_1.default.json());
+exports.app.use(express_1.default.static(path_1.default.join(__dirname, "../../html")));
 // defines a dummy route
 exports.app.get('/', (req, res) => {
     res.send("Bonjour tout le monde");
@@ -20,3 +24,5 @@ exports.app.get('/', (req, res) => {
 // use the controller to use the route
 exports.app.use('/doctors', doctors_controller_1.doctorsController);
 exports.app.use('/patients', patients_controller_1.patientsController);
+exports.app.use('/users', users_controller_1.userController);
+exports.app.use('/auth', auth_controller_1.authController);
